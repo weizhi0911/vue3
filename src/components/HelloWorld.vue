@@ -33,8 +33,8 @@ import {
   // onActivated,
   // onDeactivated,
   // onErrorCaptured,
-  // onRenderTracked,
-  // onRenderTriggered,
+  onRenderTracked,
+  onRenderTriggered,
   watch,
   watchEffect
 } from "vue";
@@ -59,20 +59,20 @@ export default {
         data.selectGirls = data.girls[index];
       },
     });
-    // const girls = ref(["大脚", "刘英", "晓红"]);
-    const overText = ref("红浪漫");
-    const overActive = () => {
-      overText.value = "点餐完成" + overText.value;
-    };
-    watch([overText, () => data.selectGirls], (n, o) => { // watch监听，没有初始化监听,可加属性immediate deep 
-      // selectGirls用get型方法，考虑到vue2，渐进式开发
-      console.log(n);
-      console.log(o);
-      document.title = n[0];
-    },{
-        deep: true,
-        immediate:true
-      });
+    // const girls = ref(["大脚", "刘英", "晓红"]
+    // const overText = ref("红浪漫");
+    // const overActive = () => {
+    //   overText.value = "点餐完成" + overText.value;
+    // };
+    // watch([overText, () => data.selectGirls], (n, o) => { // watch监听，没有初始化监听,可加属性immediate deep 
+    //   // selectGirls用get型方法，考虑到vue2，渐进式开发
+    //   console.log(n);
+    //   console.log(o);
+    //   document.title = n[0];
+    // },{
+    //     deep: true,
+    //     immediate:true
+    //   });
   //*watchEffect*   注意它与watch的区别：
 
   // 1、watch 是需要传入侦听的数据源，而 watchEffect 是自动收集数据源作为依赖。
@@ -80,9 +80,9 @@ export default {
   // 2、watch 可以访问侦听状态变化前后的值，而 watchEffect 没有。
 
   // 3、watch 是属性改变的时候执行，而 watchEffect 是默认会执行一次，然后属性改变也会执行。
-    watchEffect(() => { // 初始化监听并且改变的时候也会监听
-      console.log(overText.value, '改变')
-    })
+    // watchEffect(() => { // 初始化监听并且改变的时候也会监听
+    //   console.log(overText.value, '改变')
+    // })
     // 变量赋值取值需要用value进行取值赋值,在template模板里的话不用value
     // const selectGirFun =(index: number) => {
     //   selectGirls.value = girls.value[index];
@@ -134,21 +134,21 @@ export default {
     //   // 捕获子组件异常时触发的函数
     // });
 
-    // onRenderTracked((event) => {
-    //   // 响应式跟踪(所有响应式状态)
-    //   console.log("状态跟踪钩子函数------->>>>>>>>");
-    //   console.log(event);
-    // });
-    // onRenderTriggered((event) => {
-    //   // 单个响应式跟踪
-    //   console.log("单个状态跟踪钩子函数-->>>>>>>>");
-    //   console.log(event);
-    // });
+    onRenderTracked((event) => {
+      // 响应式跟踪(所有响应式状态)
+      console.log("状态跟踪钩子函数------->>>>>>>>");
+      console.log(event);
+    });
+    onRenderTriggered((event) => {
+      // 单个响应式跟踪
+      console.log("单个状态跟踪钩子函数-->>>>>>>>");
+      console.log(event);
+    });
     return {
       // 不使用的变量不需要return
       ...toRefs(data),
-      overText,
-      overActive
+      // overText,
+      // overActive
       // 包装一下data使data里的值变为响应式，可以在模板里使用
     };
   },
