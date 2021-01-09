@@ -59,7 +59,7 @@ export default {
         data.selectGirls = data.girls[index];
       },
     });
-    // const girls = ref(["大脚", "刘英", "晓红"l235
+    // const girls = ref(["大脚", "刘英", "晓红"l23
     // const overText = ref("红浪漫");
     // const overActive = () => {
     //   overText.value = "点餐完成" + overText.value;
