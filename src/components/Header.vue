@@ -34,7 +34,12 @@ export default {
        {
         title: 'element-ui页',
         path: '/element'
+      },
+       {
+        title: '生命周期页',
+        path: '/life-cycle'
       }
+      
     ]
 
     const jump = (item: ListInterface, index: number) => {

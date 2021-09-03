@@ -4,6 +4,7 @@ const history = createWebHistory()
 const Index = () => import('@/views/Index/Index.vue')
 const List = () => import('@/views/List/Index.vue')
 const Element = () => import('@/views/Element/Index.vue')
+const LifeCycle = () => import('@/views/LifeCycle/Index.vue')
 
 const router = createRouter({
   history,
@@ -31,6 +32,14 @@ const router = createRouter({
         isShow: true
       },
       component: Element
+    },
+    {
+      path: '/life-cycle',
+      meta: {
+        title: '生命周期页',
+        isShow: true
+      },
+      component: LifeCycle
     }
   ]
 })
