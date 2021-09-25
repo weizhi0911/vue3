@@ -7,12 +7,12 @@
     <title>Vite App</title>
     <link rel="dns-prefetch" href="https://cdn.staticfile.org" />
     <!-- 使用CDN的CSS文件 -->
-    <% for (var i in injectCss) { %>
+    <% for (var i in injectCss || []) { %>
     <link rel="stylesheet" href="<%= injectCss[i] %>" />
     <% } %>
 
     <!-- 使用CDN的JS文件 -->
-    <% for (var i in injectScript) { %>
+    <% for (var i in injectScript || []) { %>
     <script src="<%= injectScript[i] %>"></script>
     <% } %>
   </head>

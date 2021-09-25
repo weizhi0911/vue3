@@ -1,5 +1,6 @@
 import { defineConfig, loadEnv } from 'vite'
 import vue from '@vitejs/plugin-vue'
+import vueJsx from '@vitejs/plugin-vue-jsx' // 解决vue3.0使用tsx报错
 import html from 'vite-plugin-html'
 const path = require('path')
 
@@ -20,6 +21,7 @@ const cdn = {
 }
 export default ({ mode }) => {
   console.log(mode)
+  const isProduction = mode === 'production'
   let externalObj = {}
   let injectScript = []
   let injectCss = []
@@ -53,6 +55,8 @@ export default ({ mode }) => {
     publicDir: 'public',
     build: {
       assetsDir: 'static/img/',
+      cssCodeSplit: true, // 拆分css，如果禁用则会打包成一个css
+      assetsInlineLimit: 10, // 此阈值的导入或引用资源将内联为 base64 编码,设置为 0 可以完全禁用此项,单位为0
       rollupOptions: {
         output: {
           chunkFileNames: 'static/js/[name]-[hash].js',
@@ -75,6 +79,7 @@ export default ({ mode }) => {
     },
     plugins: [
       vue(),
+      vueJsx(),
       // <link href="${VITE_APP_STATIC_PATH}/h5-static/img/favicon.ico" rel="Shortcut Icon" type="image/x-icon" />
 
       html({
@@ -114,6 +119,7 @@ export default ({ mode }) => {
       }
     },
     resolve: {
+      // extensions: [".js", ".json", ".ts", ".tsx"],
       alias: {
         // 如果报错__dirname找不到，需要安装node,执行yarn add @types/node --save-dev
         '@': path.resolve(__dirname, 'src'),

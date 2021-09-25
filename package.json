@@ -7,6 +7,7 @@
     "serve": "vite preview --port 8080"
   },
   "dependencies": {
+    "@vitejs/plugin-vue-jsx": "^1.1.8",
     "element-plus": "^1.1.0-beta.7",
     "mitt": "^3.0.0",
     "vue": "^3.2.6",
@@ -15,6 +16,7 @@
   "devDependencies": {
     "@types/node": "^16.9.0",
     "@vitejs/plugin-vue": "^1.6.0",
+    "@vue/babel-plugin-jsx": "^1.0.7",
     "@vue/compiler-sfc": "^3.0.5",
     "autoprefixer": "^10.3.4",
     "sass": "^1.38.2",
