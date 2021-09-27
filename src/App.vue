@@ -3,36 +3,41 @@
     <el-button class="checked" type="primary" @click="checkedMode">
       切换到 {{ type }} 模式
     </el-button>
-    <Header />
+    <Header :type="type" />
     <router-view></router-view>
   </div>
 </template>
 <script lang="ts">
-import { Ref, ref } from 'vue'
-import { useRouter } from 'vue-router'
+import { computed, Ref } from "vue";
+import { useRouter } from "vue-router";
 
-import Header from '@/components/Header.vue'
+import Header from "@/components/Header.vue";
+
 export default {
-  name: 'App',
+  name: "App",
   components: {
-    Header
+    Header,
   },
   setup() {
-    const type: Ref<string> = ref('TSX')
-    const router = useRouter()
+    const router = useRouter();
 
+    const type: Ref<string> = computed(() => {
+      const path = router.currentRoute.value.path;
+
+      return path.indexOf("tsx") !== -1 ? "SFC" : "TSX";
+    });
     const checkedMode = () => {
-      type.value = type.value === 'TSX' ? 'SFC' : 'TSX'
-
-      if (type.value === 'TSX') {
-        router.push('/')
+      type.value = type.value === "TSX" ? "SFC" : "TSX";
+      if (type.value === "TSX") {
+        router.push("/tsx-index");
       } else {
-        router.push('/tsx-index')
+        router.push("/");
       }
-    }
-    return { type, checkedMode }
-  }
-}
+
+    };
+    return { type, checkedMode };
+  },
+};
 </script>
 
 <style scoped lang="sass">

@@ -57,7 +57,6 @@ export default {
     watch(
       count,
       async (val: number) => {
-        console.log(val)
         await nextTick()
         let node = <HTMLElement>document.querySelector('#watch-node')
         node.innerText = '变化的值为' + val
@@ -71,10 +70,10 @@ export default {
       state.age++
       year.value++
     }, 1000)
-    watchEffect(() => { // 会先执行一次用来自动收集依赖
-      console.log(state)
-      console.log(year)
-    })
+    // watchEffect(() => { // 会先执行一次用来自动收集依赖
+    //   console.log(state)
+    //   console.log(year)
+    // })
 
     return {
       msg,

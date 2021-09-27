@@ -3,7 +3,7 @@
     <ul class="list">
       <li
         class="item"
-        v-for="(item, index) in list"
+        v-for="(item, index) in type === 'SFC' ? TSXlist : SFClist"
         :key="index"
         :class="{ active: active === index }"
         @click="jump(item, index)"
@@ -14,45 +14,61 @@
   </div>
 </template>
 <script lang="ts">
-import { ref, Ref } from 'vue'
-import { useRouter } from 'vue-router'
+import { ref, Ref, toRefs } from "vue";
+import { useRouter } from "vue-router";
 interface ListInterface {
-  title: string
-  path: string
+  title: string;
+  path: string;
 }
 export default {
-  setup() {
-    const router = useRouter()
+  props: {
+    //使用props接收的值，必须指定类型
+    type: {
+      type: String,
+    },
+  },
+  setup(props) {
+    let { type } = toRefs(props);
+    const router = useRouter();
 
-    let active: Ref<number> = ref(0) // 声明变量
-    const list: ListInterface[] = [
-      { title: '主页', path: '/' },
+    let active: Ref<number> = ref(0); // 声明变量
+    const SFClist: ListInterface[] = [
+      { title: "主页", path: "/" },
       {
-        title: '列表页',
-        path: '/list'
+        title: "列表页",
+        path: "/list",
       },
-       {
-        title: 'element-ui页',
-        path: '/element'
+      {
+        title: "element-ui页",
+        path: "/element",
       },
-       {
-        title: '生命周期页',
-        path: '/life-cycle'
-      }
-      
-    ]
+      {
+        title: "生命周期页",
+        path: "/life-cycle",
+      },
+    ];
+
+    const TSXlist: ListInterface[] = [
+      { title: "主页", path: "/tsx-index" },
+      // {
+      //   title: "列表页",
+      //   path: "/list",
+      // },
+    ];
 
     const jump = (item: ListInterface, index: number) => {
-      active.value = index
-      router.push(item.path)
-    }
+      active.value = index;
+      router.push(item.path);
+    };
     return {
+      type,
       active,
-      list,
-      jump
-    }
-  }
-}
+      SFClist,
+      TSXlist,
+      jump,
+    };
+  },
+};
 </script>
 
 <style lang="sass" scoped>

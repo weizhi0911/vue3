@@ -3,7 +3,7 @@ const Index = () => import('@/views/TSX/Index/Index.tsx')
 // const List = () => import('@/views/TSX/List/Index.vue')
 // const Element = () => import('@/views/TSX/Element/Index.vue')
 // const LifeCycle = () => import('@/views/TSX/LifeCycle/Index.vue')
-console.log(Index)
+
 export const TSXRouter: Array<RouteRecordRaw> = [
   {
     path: '/tsx-index',
