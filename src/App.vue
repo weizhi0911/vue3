@@ -19,21 +19,20 @@ export default {
     Header,
   },
   setup() {
-    const router = useRouter();
+    const { currentRoute, push } = useRouter();
 
     const type: Ref<string> = computed(() => {
-      const path = router.currentRoute.value.path;
+      const path = currentRoute.value.path;
 
       return path.indexOf("tsx") !== -1 ? "SFC" : "TSX";
     });
     const checkedMode = () => {
       type.value = type.value === "TSX" ? "SFC" : "TSX";
       if (type.value === "TSX") {
-        router.push("/tsx-index");
+        push("/index-tsx");
       } else {
-        router.push("/");
+        push("/");
       }
-
     };
     return { type, checkedMode };
   },

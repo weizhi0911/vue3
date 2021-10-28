@@ -100,14 +100,14 @@ export default ({ mode }) => {
       // 引入全局 scss
       preprocessorOptions: {
         scss: {
-          // additionalData: "@import './src/assets/style/mixin.scss';"
+          // additionalData: "@import './src/assets/sass/index.sass';"
         }
       }
     },
     server: {
       // 服务器主机名，如果允许外部访问，可设置为"0.0.0.0"
       host: '0.0.0.0',
-      port: 8080, // 服务器端口号
+      // port: 8080, // 服务器端口号
       open: true, // 是否自动打开浏览器
       // 代理
       proxy: {
@@ -119,7 +119,7 @@ export default ({ mode }) => {
       }
     },
     resolve: {
-      // extensions: [".js", ".json", ".ts", ".tsx"],
+      extensions: [".js", ".json", ".ts", ".tsx"], // 导入时想要省略的扩展名列表
       alias: {
         // 如果报错__dirname找不到，需要安装node,执行yarn add @types/node --save-dev
         '@': path.resolve(__dirname, 'src'),

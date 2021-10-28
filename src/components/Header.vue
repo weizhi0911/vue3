@@ -5,8 +5,8 @@
         class="item"
         v-for="(item, index) in type === 'SFC' ? TSXlist : SFClist"
         :key="index"
-        :class="{ active: active === index }"
-        @click="jump(item, index)"
+        :class="{ active: active === item.path }"
+        @click="jump(item)"
       >
         {{ item.title }}
       </li>
@@ -14,7 +14,7 @@
   </div>
 </template>
 <script lang="ts">
-import { ref, Ref, toRefs } from "vue";
+import { computed, toRefs, Ref } from "vue";
 import { useRouter } from "vue-router";
 interface ListInterface {
   title: string;
@@ -27,11 +27,12 @@ export default {
       type: String,
     },
   },
-  setup(props) {
+  setup(props: any) {
     let { type } = toRefs(props);
     const router = useRouter();
 
-    let active: Ref<number> = ref(0); // 声明变量
+    let active: Ref<string> = computed(() => router.currentRoute.value.path);
+
     const SFClist: ListInterface[] = [
       { title: "主页", path: "/" },
       {
@@ -49,15 +50,18 @@ export default {
     ];
 
     const TSXlist: ListInterface[] = [
-      { title: "主页", path: "/tsx-index" },
-      // {
-      //   title: "列表页",
-      //   path: "/list",
-      // },
+      { title: "主页", path: "/index-tsx" },
+      {
+        title: "列表页-tsx",
+        path: "/list-tsx",
+      },
+      {
+        title: "element-ui页-tsx",
+        path: "/element-tsx",
+      },
     ];
 
-    const jump = (item: ListInterface, index: number) => {
-      active.value = index;
+    const jump = (item: ListInterface) => {
       router.push(item.path);
     };
     return {
