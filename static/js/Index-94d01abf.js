@@ -1,0 +1,1 @@
+import{C as i,r as l,k as t,j as r}from"./index-2faba407.js";var a=i({name:"List",setup(){return{list:l([{name:"element",link:"/element-tsx"},{name:"index",link:"/index-tsx"}])}},render(){const e=this.list.map(n=>t(r("el-link"),{href:n.link,target:"_blank"},{default:()=>[n.name]}));return t("div",{class:"list"},[e])}});export{a as default};
