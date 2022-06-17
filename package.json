@@ -3,13 +3,22 @@
   "version": "0.0.0",
   "scripts": {
     "dev": "vue-tsc --noEmit --skipLibCheck && vite",
+<<<<<<< HEAD
     "build": "vue-tsc --noEmit --skipLibCheck && vite build",
+=======
+    "build": "node deploy.js master",
+    "master": "vue-tsc --noEmit --skipLibCheck && vite build",
+>>>>>>> master
     "serve": "vite preview --port 8080"
   },
   "dependencies": {
     "@vitejs/plugin-vue-jsx": "^1.1.8",
     "element-plus": "^1.1.0-beta.7",
     "mitt": "^3.0.0",
+<<<<<<< HEAD
+=======
+    "shelljs": "^0.8.5",
+>>>>>>> master
     "vue": "^3.2.6",
     "vue-router": "^4.0.11"
   },
