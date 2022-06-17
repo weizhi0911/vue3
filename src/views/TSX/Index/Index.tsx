@@ -32,11 +32,7 @@ export default defineComponent({
       <div>
         这个是TSX
         {this.msg}
-<<<<<<< HEAD
-        <Children onChange={this.emitChanges}></Children>
-=======
         <Children on-Change={this.emitChanges}></Children>
->>>>>>> master
         <el-button
           type="primary"
           style="margin-top:20px"
