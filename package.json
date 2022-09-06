@@ -2,13 +2,14 @@
   "name": "my-vue-app",
   "version": "0.0.0",
   "scripts": {
-    "dev": "vue-tsc --noEmit --skipLibCheck && vite",
+    "dev": "vue-tsc --noEmit --skipLibCheck && vite --port 8081",
     "build": "node deploy.js master",
     "master": "vue-tsc --noEmit --skipLibCheck && vite build",
     "serve": "vite preview --port 8080"
   },
   "dependencies": {
     "@vitejs/plugin-vue-jsx": "^1.1.8",
+    "axios": "^0.27.2",
     "element-plus": "^1.1.0-beta.7",
     "mitt": "^3.0.0",
     "shelljs": "^0.8.5",

@@ -4,6 +4,7 @@ const Index = () => import('@/views/SFC/Index/Index.vue')
 const List = () => import('@/views/SFC/List/Index.vue')
 const Element = () => import('@/views/SFC/Element/Index.vue')
 const LifeCycle = () => import('@/views/SFC/LifeCycle/Index.vue')
+const MarketingMap = () => import('@/views/SFC/MarketingMap/Index.vue')
 
 export const SFCRouter: Array<RouteRecordRaw> = [
   {
@@ -37,5 +38,13 @@ export const SFCRouter: Array<RouteRecordRaw> = [
       isShow: true
     },
     component: LifeCycle
+  },
+  {
+    path: '/marketing-map',
+    meta: {
+      title: '合成营销图',
+      isShow: true
+    },
+    component: MarketingMap
   }
 ]

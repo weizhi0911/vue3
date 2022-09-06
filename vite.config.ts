@@ -23,8 +23,8 @@ export default ({ mode }) => {
   console.log(mode);
   const isProduction = mode === "production";
   let externalObj = {};
-  let injectScript = [];
-  let injectCss = [];
+  let injectScript:string[] = [];
+  let injectCss:string[] = [];
   if (mode == "develop" || mode == "test" || mode == "release") {
     // externalObj = {
     //   vue: 'Vue',

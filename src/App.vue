@@ -1,11 +1,12 @@
 <template>
-  <div id="app">
-    <el-button class="checked" type="primary" @click="checkedMode">
+    <template v-if="!$route.meta.isHideHeader">
+      <el-button class="checked" type="primary" @click="checkedMode">
       切换到 {{ type }} 模式
     </el-button>
     <Header :type="type" />
+    </template>
+  
     <router-view></router-view>
-  </div>
 </template>
 <script lang="ts">
 import { computed, Ref } from "vue";
@@ -39,7 +40,7 @@ export default {
 };
 </script>
 
-<style scoped lang="sass">
+<style  lang="sass">
 #app
   font-family: Avenir, Helvetica, Arial, sans-serif
   -webkit-font-smoothing: antialiased
@@ -47,7 +48,10 @@ export default {
   text-align: center
   color: #2c3e50
   margin-top: 60px
+  
+</style>
 
+<style scoped lang="sass">
   .checked
     position: absolute
     left: 10px

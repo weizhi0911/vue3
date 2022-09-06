@@ -47,6 +47,10 @@ export default {
         title: "生命周期页",
         path: "/life-cycle",
       },
+        {
+        title: "合成营销图",
+        path: "/marketing-map",
+      },
     ];
 
     const TSXlist: ListInterface[] = [
