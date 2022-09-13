@@ -3,18 +3,89 @@
     "types": [
       "vite/client"
     ],
+    "resolveJsonModule": true,
+    // 忽略 this 的类型检查
+    "noImplicitThis": false,
+    // TS编译器在第一次编译之后会生成一个存储编译信息的文件，
+    // 第二次编译会在第一次的基础上进行增量编译，可以提高编译的速度
+    // "incremental": true,
+    //  // 增量编译文件的存储位置
+    // "tsBuildInfoFile": "./tsbuildinfo",
+    // 打印诊断信息
+    "diagnostics": true,
+    // 显示详细的诊断信息
+    "extendedDiagnostics": true,
+     // 允许编译器编译JS，JSX文件
+    "allowJs": true,
+     // 允许在JS文件中报错，通常与allowJS一起使用
+    "checkJs": true,
+    "removeComments":true,
+    // 不生成 helper函数，减小体积，需要额外安装，常配合importHelpers一起使用
+    // "noEmitHelpers": true,
+    // 通过tslib引入helper函数，文件必须是模块
+    "importHelpers": true,
+    // 目标语言的版本
     "target": "esnext",
+    // 生成代码的模板标准
     "module": "esnext",
-    "moduleResolution": "node",
+    // 开启所有严格的类型检查
     "strict": true,
     "jsx": "preserve",
-    "sourceMap": true,
-    "resolveJsonModule": true,
+    // 模块解析策略，ts默认用node的解析策略，即相对的方式导入
+    "moduleResolution": "node",
+    // 为ES装饰器启用实验性支持
+    "experimentalDecorators": true,
+    // 允许export=导出，由import from 导入
     "esModuleInterop": true,
-    "lib": [
-      "esnext",
-      "dom"
-    ]
+    // 允许从模块进行默认导入而没有默认导出。这不影响代码发出，仅影响类型检查
+    "allowSyntheticDefaultImports": true,
+    // 禁止--noImplicitAny为缺少索引签名的对象建立索引的错误
+    "suppressImplicitAnyIndexErrors": true,
+    // 禁用函数类型的双变量参数检查
+    "strictFunctionTypes": true,
+    // 生成目标文件的sourceMap文件
+    "sourceMap": true,
+
+      // 基本目录，用于解析非相对模块名称
+      "baseUrl": ".",
+    "lib": ["esnext", "dom", "dom.iterable", "scripthost"],
+    // 路径映射，相对于baseUrl
+   "paths": {
+    "#env": ["env.js"],
+
+    "@/*": ["src/*"],
+
+    "@api/*": ["src/api/*"],
+
+    "@archImg/*": ["src/assets/images/architecture/*"],
+    "@globalImg/*": ["src/assets/images/global/*"],
+    "@viewsImg/*": ["src/assets/images/views/*"],
+
+    "@archSass/*": ["src/assets/sass/architecture/*"],
+    "@bizSass/*": ["src/assets/sass/business/*"],
+    "@globalSass/*": ["src/assets/sass/global/*"],
+
+    "@bizCmp/*": ["src/components/business/*"],
+    "@globalCmp/*": ["src/components/global/*"],
+
+    "@archConf/*": ["src/config/architecture/*"],
+    "@bizConf/*": ["src/config/business/*"],
+
+    "@archInterface/*": ["src/interface/architecture/*"],
+    "@bizInterface/*": ["src/interface/business/*"],
+    "@globalInterface/*": ["src/interface/global/*"],
+
+    "@bizMixins/*": ["src/mixins/business/*"],
+    "@globalMixins/*": ["src/mixins/global/*"],
+
+    "@archType/*": ["src/type/architecture/*"],
+    "@bizType/*": ["src/type/business/*"],
+    "@globalType/*": ["src/type/global/*"],
+
+    "@archUtils/*": ["src/utils/architecture/*"],
+    "@bizUtils/*": ["src/utils/business/*"],
+    "@globalUtils/*": ["src/utils/global/*"]
+  }
   },
   "include": [
     "src/**/*.ts",

@@ -1,40 +1,45 @@
 import { RouteRecordRaw } from 'vue-router'
 import { createWebHistory, createRouter } from 'vue-router'
-import { SFCRouter } from './sfcRouter'
-import { TSXRouter } from './tsxRouter'
 
-const ErrorViews = () => import('@/views/error/Index.vue')
-const Login = () => import('@/views/logins/Index.vue')
-
-console.log(Login)
+const EquilibriumAnalysis = () => import('@/views/equilibriumAnalysis/Index.vue')
+const PurchasedElectricity = () => import('@/views/purchasedElectricity/Index.vue')
 
 const history = createWebHistory()
 
-const routerOption: Array<RouteRecordRaw> = [ {
-  path: '/404',
-  meta: {
-    title: '未知页面',
-    isShow: true,
-    isHideHeader: true
+const routes: Array<RouteRecordRaw> = [
+  {
+    name:'EquilibriumAnalysis',
+    path: '/equilibrium-analysis',
+    meta: {
+      title: '平衡分析',
+      // isShow: true,
+      // isHideHeader: true
+    },
+    component: EquilibriumAnalysis
   },
-  component: ErrorViews
-}, {
-  path: '/login',
-  meta: {
-    title: '登录页',
-    isShow: true,
-    isHideHeader: true
+  {
+    name:'PurchasedElectricity',
+    path: '/purchased-electricity',
+    meta: {
+      title: '外购电决策'
+    },
+    component: PurchasedElectricity
   },
-  component: Login
-}]
+
+  //   {
+  //   path: '/',
+  //   meta: {
+  //     title: '主页',
+  //     isShow: true,
+  //     isHideHeader: true
+  //   },
+  //   component: Index
+  // }
+]
 
 const router = createRouter({
   history,
-  routes: [
-    ...routerOption,
-    ...SFCRouter,
-    ...TSXRouter
-  ]
+  routes
 })
 
 export default router

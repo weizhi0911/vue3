@@ -1,53 +1,36 @@
 import { defineConfig, loadEnv } from "vite";
 import vue from "@vitejs/plugin-vue";
 import vueJsx from "@vitejs/plugin-vue-jsx"; // 解决vue3.0使用tsx报错
-import html from "vite-plugin-html";
+const fs = require('fs')
+
 const path = require("path");
+// 获取输入目录的绝对路径
+const resolve = directory => path.resolve(__dirname, directory)
 
-// https://vitejs.dev/config/
-
-// const VITE_APP_STATIC_PATH = 'https://cdn.staticfile.org'
-
-const cdn = {
-  js: [
-    "https://cdn.staticfile.org/vue/3.2.11/vue.cjs.min.js",
-    "https://cdn.staticfile.org/vue-router/4.0.11/vue-router.cjs.min.js",
-    "https://cdn.staticfile.org/axios/0.21.4/axios.js",
-    "https://cdn.staticfile.org/element-plus/1.0.2-beta.71/index.full.min.js",
-  ],
-  css: [
-    "https://cdn.staticfile.org/element-plus/1.0.2-beta.71/theme-chalk/base.min.css",
-  ],
-};
 export default ({ mode }) => {
-  console.log(mode);
   const isProduction = mode === "production";
-  let externalObj = {};
-  let injectScript:string[] = [];
-  let injectCss:string[] = [];
+  const env = loadEnv(mode, process.cwd(), '')
+
   if (mode == "develop" || mode == "test" || mode == "release") {
-    // externalObj = {
-    //   vue: 'Vue',
-    //   'vue-router': 'VueRouter',
-    //   'element-plus': 'ElementPlus'
-    // }
-    // injectScript = `
-    // <script crossorigin="anonymous" type="text/javascript" src="${VITE_APP_STATIC_PATH}/h5-static/vue@${VueV}/vue.runtime.prod.js"></script>
-    // <script crossorigin="anonymous" type="text/javascript" src="${VITE_APP_STATIC_PATH}/h5-static/vue-router@${vueRouter}/vue-router.prod.js"></script>
-    // <script crossorigin="anonymous" type="text/javascript" src="${VITE_APP_STATIC_PATH}/h5-static/weixin@${weixin}/index.js"></script>
-    // <script crossorigin="anonymous" type="text/javascript" src="${VITE_APP_STATIC_PATH}/h5-static/hys-static@${hysStaticJs}/static.umd.js"></script>`
-  } else if (mode == "production") {
-    externalObj = {
-      vue: "Vue",
-      "vue-router": "VueRouter",
-      "element-plus": "ElementPlus",
-    };
-    injectScript = cdn.js;
-    injectCss = cdn.css;
-    // cdn.js.map(item => (injectScript +=  `<script crossorigin="anonymous" type="text/javascript" src="${item}"></script>`))
-    // cdn.css.map(item => (injectCss += `<link rel="stylesheet" type="text/css" href="${item}"/>`))
-    // console.log(injectScript)
+ } else if (mode == "production") {
+  
   }
+
+  const tsconfig = fs.readFileSync('./tsconfig.json')
+
+  // 路径别名
+  const aliasObj = {}
+
+  const tsconfigAlias = JSON.parse(
+    // 去除注释
+    tsconfig.toString().replace(/\/\/.*(\r|\n|\r\n)/g, '')
+  ).compilerOptions.paths
+
+  Object.keys(tsconfigAlias).forEach(alias => {
+    aliasObj[alias.replace('/*', '')] = resolve(tsconfigAlias[alias][0].replace('/*', ''))
+  })
+
+  
 
   return defineConfig({
     base: "./",
@@ -64,7 +47,6 @@ export default ({ mode }) => {
           entryFileNames: "static/js/[name]-[hash].js",
           assetFileNames: "static/[ext]/[name]-[hash].[ext]",
           manualChunks(id) {
-            console.log(id)
             if (id.includes("node_modules") && !id.includes('vue')) {
               return id
                 .toString()
@@ -79,30 +61,20 @@ export default ({ mode }) => {
     optimizeDeps: {
       // exclude: ['vue', 'vue-router', 'axios', 'qs', 'element-plus']
     },
+    define: {
+      'process.env': env
+    },
     plugins: [
       vue(),
       vueJsx(),
       // <link href="${VITE_APP_STATIC_PATH}/h5-static/img/favicon.ico" rel="Shortcut Icon" type="image/x-icon" />
 
-      html({
-        inject: {
-          injectData: {
-            injectScript,
-            injectCss,
-          },
-        },
-        minify: true,
-      }),
     ],
     css: {
-      // postcss: {
-      //   // 样式自动添加前缀
-      //   plugins: [require('autoprefixer')]
-      // },
-      // 引入全局 scss
+      // 引入全局 sass
       preprocessorOptions: {
-        scss: {
-          // additionalData: "@import './src/assets/sass/index.sass';"
+        scss: { // 预处理
+          additionalData: `@import '@archSass/variables/index.sass';@import '@archSass/mixin/g_placeholder.sass';@import '@archSass/mixin/g_lineEllipsis.sass';@import "@globalSass/index.sass";`
         },
       },
     },
@@ -114,7 +86,7 @@ export default ({ mode }) => {
       // 代理
       proxy: {
         "/api": {
-          target: "http://xxx.xxx.xx",
+          target: env.VUE_APP_API_URL,
           changeOrigin: true,
           rewrite: (path) => path.replace(/^\/api/, ""),
         },
@@ -122,11 +94,11 @@ export default ({ mode }) => {
     },
     resolve: {
       extensions: [".js", ".json", ".ts", ".tsx"], // 导入时想要省略的扩展名列表
-      alias: {
-        // 如果报错__dirname找不到，需要安装node,执行yarn add @types/node --save-dev
-        "@": path.resolve(__dirname, "src"),
-        comps: path.resolve(__dirname, "src/components"),
-      },
+      alias:aliasObj
+      // alias: {
+      //   // 如果报错__dirname找不到，需要安装node,执行yarn add @types/node --save-dev
+      //   "@": path.resolve(__dirname, "src"),
+      // },
     },
   });
 };
